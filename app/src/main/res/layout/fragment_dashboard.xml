@@ -267,13 +267,46 @@
 
             </RelativeLayout>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="-60dp"
+                android:layout_below="@+id/tocard"
+                android:id="@+id/runningbanner"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/bannerViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                        android:id="@+id/dotsIndicator"
+                        android:layout_width="wrap_content"
+                        app:dotsSize="@dimen/_8sdp"
+                        app:dotsColor="@color/secondary_label"
+                        app:selectedDotColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="8dp"/>
+
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/optioncard"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:layout_below="@+id/tocard"
+                android:layout_below="@+id/runningbanner"
                 android:layout_marginStart="30sp"
-                android:layout_marginTop="-60dp"
                 android:layout_marginEnd="30sp"
                 android:layout_marginBottom="10sp"
                 app:cardBackgroundColor="#FFFBFA"

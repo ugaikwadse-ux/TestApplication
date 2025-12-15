@@ -14,7 +14,6 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/_20sdp"
             android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
@@ -97,7 +96,7 @@
 
         <!-- User Info -->
         <LinearLayout
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
