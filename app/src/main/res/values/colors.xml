@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cardbg">#343B57</color>
     <color name="divider_two">#262626</color>
+    <color name="simple_white">#e4e4e7</color>
     <color name="search_background">#F3F6FB</color>
     <color name="secondary_label">#757575</color>
     <color name="backgroung">#1C2238</color>

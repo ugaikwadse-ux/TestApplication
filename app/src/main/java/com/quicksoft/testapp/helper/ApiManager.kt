@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.annotation.Keep
 import com.quicksoft.testapp.R
 import com.quicksoft.testapp.client.RetrofitClient
-import com.quicksoft.testapp.model.apidata
+import com.quicksoft.testapp.model.ApiResponse
 import com.quicksoft.testapp.service.ApiService
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,17 +21,17 @@ class ApiManager {
 
     interface FeedApiCallBack {
         fun onError(message: String)
-        fun onSuccess(response: apidata)
+        fun onSuccess(response: ApiResponse)
     }
 
 
 
     fun fetchApiData(context: Context, member_id: String, api_password:String, api_pin:String, number: String, callback: FeedApiCallBack) {
         apiService.getFeed(member_id, api_password,api_pin, number).enqueue(object :
-            Callback<apidata> {
+            Callback<ApiResponse> {
             override fun onResponse(
-                call: Call<apidata>,
-                response: Response<apidata>
+                call: Call<ApiResponse>,
+                response: Response<ApiResponse>
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     callback.onSuccess(response.body()!!)
@@ -40,7 +40,7 @@ class ApiManager {
                 }
             }
 
-            override fun onFailure(call: Call<apidata>, t: Throwable) {
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 callback.onError(handleFailure(context, t))
             }
         })

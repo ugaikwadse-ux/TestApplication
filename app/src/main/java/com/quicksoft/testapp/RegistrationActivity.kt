@@ -2,9 +2,17 @@ package com.quicksoft.testapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,11 +20,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.sign
@@ -71,7 +82,7 @@ class RegistrationActivity : AppCompatActivity() {
             startActivity(Intent(this@RegistrationActivity, SiginActivity::class.java))
         }
 
-        checkLocationPermission()
+        checkLocationPermissionAndFetch()
         signupbtn.setOnClickListener {
 
             val mAuth = FirebaseAuth.getInstance()
@@ -128,20 +139,53 @@ class RegistrationActivity : AppCompatActivity() {
             .document(uid)
             .set(userData)
             .addOnSuccessListener {
+                sendLocalFcmNotification(
+                    title = "Welcome 🎉",
+                    message = "Your account has been created successfully"
+                )
                 startActivity(Intent(this@RegistrationActivity, MainActivity::class.java))
 
             }
     }
 
+    private fun sendLocalFcmNotification(title: String, message: String) {
 
-    private fun checkLocationPermission() {
+        val channelId = "default_channel"
+
+        val notificationManager =
+            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "App Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.notification)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .build()
+
+        notificationManager.notify(System.currentTimeMillis().toInt(), notification)
+    }
+
+
+
+    private fun checkLocationPermissionAndFetch() {
+        // 1️⃣ Check permission
         if (ContextCompat.checkSelfPermission(
-                this@RegistrationActivity,
+                this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            fetchCurrentLocation()
+            checkLocationEnabled()
         } else {
+            // Launch permission request
             locationPermissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -151,6 +195,29 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
+    // 2️⃣ Check if system location is ON
+    private fun checkLocationEnabled() {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+            !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        ) {
+            // Prompt user to turn on location
+            AlertDialog.Builder(this)
+                .setTitle("Enable Location")
+                .setMessage("Location is required for this feature. Please turn it on.")
+                .setPositiveButton("Settings") { _, _ ->
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(intent)
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        } else {
+            // Location enabled → fetch it
+            fetchCurrentLocation()
+        }
+    }
+
+    // 3️⃣ Fetch location safely
     @SuppressLint("MissingPermission")
     private fun fetchCurrentLocation() {
         fusedLocationClient.lastLocation
@@ -158,6 +225,25 @@ class RegistrationActivity : AppCompatActivity() {
                 if (location != null) {
                     userLatitude = location.latitude
                     userLongitude = location.longitude
+                    Log.d("Location", "Lat: $userLatitude, Lng: $userLongitude")
+                } else {
+                    // Last location is null → request fresh location
+                    requestNewLocationData()
+                }
+            }
+    }
+
+    // 4️⃣ Request new location if lastLocation is null
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000).build()
+
+        fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    userLatitude = location.latitude
+                    userLongitude = location.longitude
+                    Log.d("Location", "Fresh Lat: $userLatitude, Lng: $userLongitude")
                 }
             }
     }

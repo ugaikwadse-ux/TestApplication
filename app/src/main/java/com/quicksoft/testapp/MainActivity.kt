@@ -1,19 +1,19 @@
 package com.quicksoft.testapp
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -22,19 +22,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.quicksoft.testapp.adapter.SideAdapter
-import com.quicksoft.testapp.helper.ApiManager
 import com.quicksoft.testapp.model.SideItems
 import com.quicksoft.testapp.model.UserInfo
-import com.quicksoft.testapp.model.apidata
+import com.razorpay.PaymentResultListener
 import me.ibrahimsn.lib.SmoothBottomBar
+import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , PaymentResultListener {
 
     private lateinit var profilename: AppCompatTextView
     private lateinit var profileemail: AppCompatTextView
     private lateinit var smoothBottomBar: SmoothBottomBar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var recyclerview: RecyclerView
+    private lateinit var addressofuser: AppCompatTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_main)
 
+        addressofuser = findViewById(R.id.addressofuser)
         recyclerview = findViewById(R.id.recyclerview)
         drawerLayout = findViewById(R.id.main)
         smoothBottomBar = findViewById(R.id.smoothBottomBar)
@@ -66,30 +68,6 @@ class MainActivity : AppCompatActivity() {
             // open profile
         }
 
-        ApiManager().fetchApiData(
-            this@MainActivity, "", "","","",
-            object : ApiManager.FeedApiCallBack {
-                @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
-                override fun onSuccess(response: apidata) {
-                    // Extract the user object
-                    val user = response.data
-                    if (user != null) {
-
-                    } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Api Called Using Retrofit But No data",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onError(str: String) {
-                    Toast.makeText(this@MainActivity, str, Toast.LENGTH_SHORT).show()
-                    return
-                }
-            })
-
         val mAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
 
@@ -103,6 +81,10 @@ class MainActivity : AppCompatActivity() {
                         userInfo?.let {
                             profilename.text = it.name
                             profileemail.text = it.email
+
+                            getAddressFromLatLng(it.latitude?: 0.0, it.longitude?:0.0) { address ->
+                                addressofuser.text = address
+                            }
                         }
 
                     } else {
@@ -130,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         recyclerview.adapter = SideAdapter(list)
 
 
+
     }
 
 
@@ -138,5 +121,84 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.container, fragment)
             .setReorderingAllowed(true)
             .commit()
+    }
+
+    private fun sendLocalFcmNotification(title: String, message: String) {
+
+        val channelId = "default_channel"
+
+        val notificationManager =
+            getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "App Notifications",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.notification)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setAutoCancel(true)
+            .build()
+
+        notificationManager.notify(System.currentTimeMillis().toInt(), notification)
+    }
+
+
+    override fun onPaymentSuccess(p0: String?) {
+        sendLocalFcmNotification(
+            title = "Payment Successful 🎉",
+            message = "Your payment has been completed successfully"
+        )
+    }
+
+    override fun onPaymentError(p0: Int, p1: String?) {
+        sendLocalFcmNotification(
+            title = "Payment Failed!!",
+            message = "Payment has been failed due to $p1"
+        )
+    }
+
+    fun getAddressFromLatLng(latitude: Double, longitude: Double, callback: (String) -> Unit) {
+        try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                geocoder.getFromLocation(latitude, longitude, 1, object : Geocoder.GeocodeListener {
+                    override fun onGeocode(addresses: MutableList<android.location.Address>) {
+                        if (addresses.isNotEmpty()) {
+                            callback(addresses[0].getAddressLine(0))
+                        } else {
+                            callback("Address not found")
+                        }
+                    }
+                })
+            } else {
+                // Fallback for older devices
+                Thread {
+                    try {
+                        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                        val address = if (!addresses.isNullOrEmpty()) {
+                            addresses[0].getAddressLine(0)
+                        } else {
+                            "Address not found"
+                        }
+                        runOnUiThread { callback(address) }
+                    } catch (e: Exception) {
+                        Log.e("GeocoderError", e.message ?: "Error getting address")
+                        runOnUiThread { callback("Error getting address") }
+                    }
+                }.start()
+            }
+
+        } catch (e: Exception) {
+            Log.e("GeocoderError", e.message ?: "Error getting address")
+            callback("Error getting address")
+        }
     }
 }

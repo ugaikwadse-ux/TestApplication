@@ -2,7 +2,7 @@ package com.quicksoft.testapp.service
 
 
 import androidx.annotation.Keep
-import com.quicksoft.testapp.model.apidata
+import com.quicksoft.testapp.model.ApiResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,5 +16,5 @@ interface ApiService {
         @Query("api_password") api_password: String,
         @Query("api_pin") api_pin:String,
         @Query("number") number: String
-    ): Call<apidata>
+    ): Call<ApiResponse>
 }

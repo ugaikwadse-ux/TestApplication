@@ -7,4 +7,7 @@
     <string name="no_connections">Server unreachable! Check your internet.</string>
     <string name="bilinmeyen_hata">Unknown error:</string>
     <string name="ag_hatasi">Network issue! Please check your internet.</string>
+    <string name="notification_title">Stay Updated!</string>
+    <string name="notification_description">Enable notifications to never miss updates.</string>
+    <string name="notification_button">Enable</string>
 </resources>
