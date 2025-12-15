@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".RegistrationActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@drawable/ic_back"
+        android:tint="@color/black"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:id="@+id/back_btn"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_15ssp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/roboto"
+        android:textStyle="bold"
+        android:id="@+id/signuplabel"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_below="@+id/signuplabel"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/signup"
+        android:id="@+id/logoapp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full Name*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/logoapp"
+        android:id="@+id/namelabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:imeOptions="actionNext"
+        android:hint="Enter Full Name"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/inputfullname"
+        android:layout_below="@id/namelabel"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/inputfullname"
+        android:id="@+id/emaillabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:imeOptions="actionNext"
+        android:hint="Enter email adress"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/_11sdp"
+        android:textColor="@color/black"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/inputemail"
+        android:layout_below="@id/emaillabel"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/inputemail"
+        android:id="@+id/passwordlabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:imeOptions="actionNext"
+        android:textColor="@color/black"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:fontFamily="@font/roboto"
+        android:hint="Enter password"
+        android:inputType="textPassword"
+        android:textSize="@dimen/_11sdp"
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/inputpassword"
+        android:layout_below="@id/passwordlabel"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comform Password*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/inputpassword"
+        android:id="@+id/comformpasswordlabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:imeOptions="actionNext"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:hint="Comform Password"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_11sdp"
+        android:inputType="textPassword"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/inputcomfirmpassword"
+        android:layout_below="@id/comformpasswordlabel"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Mobile No.*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/inputcomfirmpassword"
+        android:id="@+id/mobilenolabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:inputType="phone"
+        android:imeOptions="actionNext"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/_11sdp"
+        android:textColor="@color/black"
+        android:hint="Enter mobile no. excluding +91"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:id="@+id/inputmobileno"
+        android:layout_below="@id/mobilenolabel"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set 6 Digit Passcode.*"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_below="@+id/inputmobileno"
+        android:id="@+id/passcodelabel"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:imeOptions="actionDone"
+        android:background="@drawable/button_bg"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/inputpasscode"
+        android:textColor="@color/black"
+        android:inputType="numberDecimal"
+        android:fontFamily="@font/roboto"
+        android:textSize="@dimen/_11sdp"
+        android:hint="Enter 6 Digit Passcode to access wallet."
+        android:layout_below="@id/passcodelabel"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:textAllCaps="false"
+        android:text="Sign Up"
+        android:background="@drawable/button_bg"
+        android:layout_below="@+id/inputpasscode"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/signupbtn"/>
+
+
+</RelativeLayout>

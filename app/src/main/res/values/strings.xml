@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="basarisiz_yanit">Failed to load response.</string>
+    <string name="zaman_asimi">Connection timed out! Please retry.</string>
+    <string name="no_connections">Server unreachable! Check your internet.</string>
+    <string name="bilinmeyen_hata">Unknown error:</string>
+    <string name="ag_hatasi">Network issue! Please check your internet.</string>
+</resources>

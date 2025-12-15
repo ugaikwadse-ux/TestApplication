@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "521837826398",
+    "firebase_url": "https://testapp-de25d-default-rtdb.firebaseio.com",
+    "project_id": "testapp-de25d",
+    "storage_bucket": "testapp-de25d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521837826398:android:d4f3f8f208f385d5df3fcf",
+        "android_client_info": {
+          "package_name": "com.quicksoft.testapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNHMfwpCEpToXRrlTsEO-wucgkRniD5Ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
