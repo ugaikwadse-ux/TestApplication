@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.quicksoft.testapp.ApiLoadDataActivity
 import com.quicksoft.testapp.R
 import com.quicksoft.testapp.SiginActivity
 import com.quicksoft.testapp.model.SideItems
@@ -15,7 +16,6 @@ import com.quicksoft.testapp.model.SideItems
 class SideAdapter(
     private val items: List<SideItems>
 ) : RecyclerView.Adapter<SideAdapter.FollowerViewHolder>() {
-
     inner class FollowerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val profilePhoto: AppCompatImageView =
             itemView.findViewById(R.id.profilePhoto)
@@ -31,21 +31,30 @@ class SideAdapter(
 
     override fun onBindViewHolder(holder: FollowerViewHolder, position: Int) {
         val item = items[position]
-
         holder.nameText.text = item.name
         holder.profilePhoto.setImageResource(item.profilePhoto)
 
-        if (position == items.size - 1) {
-            holder.itemView.setOnClickListener {
-                FirebaseAuth.getInstance().signOut()
-                val context = holder.itemView.context
-                val intent = Intent(context, SiginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                context.startActivity(intent)
+        holder.itemView.setOnClickListener(
+            when (position) {
+
+                0 -> View.OnClickListener {
+                    val context = holder.itemView.context
+                    val intent = Intent(context, ApiLoadDataActivity::class.java)
+                    context.startActivity(intent)
+                }
+
+                items.size - 1 -> View.OnClickListener {
+                    FirebaseAuth.getInstance().signOut()
+                    val context = holder.itemView.context
+                    val intent = Intent(context, SiginActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    context.startActivity(intent)
+                }
+
+                else -> null
             }
-        } else {
-            holder.itemView.setOnClickListener(null)
-        }
+        )
     }
 
     override fun getItemCount(): Int = items.size

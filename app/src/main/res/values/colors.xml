@@ -29,4 +29,17 @@
     <color name="bg_line">#E7E7E7</color>
 
     <color name="black_light">#2A293E</color>
+
+    <color name="cell_background_color">#ffffff</color>
+    <color name="header_line_color">@android:color/holo_red_light</color>
+    <color name="table_view_default_text_color">#0a0a0a</color>
+    <color name="light_white">#a6a6a6</color>
+    <color name="light_black">#333333</color>
+    <color name="light_grey">#404040</color>
+    <color name="ripple_color">#303030</color>
+
+    <color name="second_text">#98989a</color>
+    <color name="primary_label">#212121</color>
+
+
 </resources>

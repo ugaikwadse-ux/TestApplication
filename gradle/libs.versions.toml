@@ -19,6 +19,7 @@ sdpAndroid = "1.1.0"
 roundedimageview = "2.3.0"
 smoothbottombar = "1.7.9"
 sspAndroid = "1.1.0"
+tableview = "0.8.9.4"
 
 [libraries]
 checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
@@ -46,6 +47,7 @@ roundedimageview = { module = "com.makeramen:roundedimageview", version.ref = "r
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
 smoothbottombar = { module = "com.github.ibrahimsn98:SmoothBottomBar", version.ref = "smoothbottombar" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
+tableview = { module = "com.github.evrencoskun:TableView", version.ref = "tableview" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.dotsindicator)
     implementation(libs.play.services.location)
     implementation(libs.lottie)
+    implementation(libs.tableview)
     implementation(platform(libs.firebase.bom))
     implementation(libs.smoothbottombar)
     implementation(libs.firebase.auth.ktx)

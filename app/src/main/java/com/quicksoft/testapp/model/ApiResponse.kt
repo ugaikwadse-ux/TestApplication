@@ -3,32 +3,33 @@ package com.quicksoft.testapp.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+import com.google.gson.annotations.SerializedName
+
 data class ApiResponse(
-    @SerialName("ERROR")
+    @SerializedName("ERROR")
     val error: Int,
 
-    @SerialName("MESSAGE")
-    val message: String,
+    @SerializedName("MESSAGE")
+    val message: String?,
 
-    @SerialName("ip")
+    @SerializedName("ip")
     val ip: String,
 
-    @SerialName("request")
+    @SerializedName("request")
     val request: RequestData
 )
 
-@Serializable
 data class RequestData(
-    @SerialName("member_id")
-    val memberId: String,
+    @SerializedName("member_id")
+    val memberId: String?,
 
-    @SerialName("api_password")
-    val apiPassword: String,
+    @SerializedName("api_password")
+    val apiPassword: String?,
 
-    @SerialName("api_pin")
-    val apiPin: String,
+    @SerializedName("api_pin")
+    val apiPin: String?,
 
-    @SerialName("number")
-    val number: String
+    @SerializedName("number")
+    val number: String?
 )
+

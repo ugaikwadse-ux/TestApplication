@@ -14,6 +14,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -93,7 +94,6 @@ class SiginActivity : AppCompatActivity() {
 
         tvDontHaveAcc.setOnClickListener {
             startActivity(Intent(this@SiginActivity, RegistrationActivity::class.java))
-
         }
 
         loginBtn.setOnClickListener {
@@ -110,12 +110,12 @@ class SiginActivity : AppCompatActivity() {
         val password = inputPassword.text.toString()
 
         when {
-            email.isEmpty() || !email.contains("@gmail.com") -> {
+            email.isEmpty() || !email.contains("@") -> {
                 showError(inputEmail, "Email is not valid")
             }
 
-            password.isEmpty() || password.length < 5 -> {
-                showError(inputPassword, "Password must be 5 characters")
+            password.isEmpty() || password.length < 4 -> {
+                showError(inputPassword, "Password must be 4 characters")
             }
 
             else -> {
@@ -130,7 +130,8 @@ class SiginActivity : AppCompatActivity() {
                         startActivity(Intent(this@SiginActivity, MainActivity::class.java))
                         finish()
                     }
-                    .addOnFailureListener {
+                    .addOnFailureListener { e->
+                        Log.e("LOGIN_ERROR", e.message ?: "Unknown error")
                         mLoadingDialog.dismiss()
                         Toast.makeText(
                             this@SiginActivity,

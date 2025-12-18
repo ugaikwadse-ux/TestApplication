@@ -10,4 +10,21 @@
     <string name="notification_title">Stay Updated!</string>
     <string name="notification_description">Enable notifications to never miss updates.</string>
     <string name="notification_button">Enable</string>
+    <string name="sort_ascending">Sort Ascending</string>
+    <string name="sort_descending">Sort Descending</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="hiding_row_sample">Hiding 3. Row Sample</string>
+    <string name="showing_row_sample">Showing 3. Row Sample</string>
+    <string name="scroll_to_column_position">Scroll to 3. column position</string>
+    <string name="scroll_to_row_position">Scroll to 5. row position</string>
+    <string name="show_hide_the_column">Showing / Hiding 1. column</string>
+    <string name="table_pagination_details">Page %s, %s - %s.</string>
+    <string name="things_to_know_before_you_get_started">Things to Know Before you get Started!!</string>
+    <string-array name="items_per_page">
+        <item>All</item>
+        <item>10</item>
+        <item>20</item>
+        <item>25</item>
+        <item>50</item>
+    </string-array>
 </resources>

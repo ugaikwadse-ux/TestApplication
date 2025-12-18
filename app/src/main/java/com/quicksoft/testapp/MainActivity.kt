@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity() , PaymentResultListener {
         }
 
         val list = listOf(
+            SideItems("Api Data",R.drawable.api_icon),
             SideItems("Profile", R.drawable.person),
             SideItems("KYC", R.drawable.card) ,
             SideItems("Support", R.drawable.whatsappsupport),

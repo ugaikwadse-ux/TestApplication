@@ -101,7 +101,6 @@ class RegistrationActivity : AppCompatActivity() {
                 password == confirmPassword &&
                 mobile.length == 10
             ) {
-
                 mAuth.createUserWithEmailAndPassword(email, confirmPassword)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
